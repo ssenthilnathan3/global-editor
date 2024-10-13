@@ -1,0 +1,74 @@
+.wrap {
+  position: relative;
+
+  code {
+    margin: 0 !important;
+  }
+
+  pre {
+    margin: 10px 0 !important;
+  }
+
+  &.maxHeight {
+    code {
+      max-height: 370px;
+    }
+  }
+
+  &:hover {
+    .btnCopy,
+    .btnDelete {
+      opacity: 1;
+    }
+  }
+}
+
+
+
+.blockInfo {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  right: 5px;
+  gap: 8px;
+}
+
+.selectLang {
+  cursor: pointer;
+  transition: all .3s;
+  border-radius: 4px;
+  border-width: 0px !important;
+
+  > button {
+    padding: 0px !important;
+    height: initial !important;
+    outline: none !important;
+    border: none !important;
+    outline-offset: 0px !important;
+    color: white !important;
+  }
+}
+
+.btnCopy {
+  color: #ebebebbf;
+  cursor: pointer;
+  transition: all 0.3s;
+  opacity: 0;
+}
+
+.copied {
+  color: rgb(125, 207, 2);
+}
+
+.btnDelete {
+  color: #ebebebbf;
+  cursor: pointer;
+  transition: all 0.3s;
+  opacity: 0;
+
+  &:hover {
+    color: #ff4d4f;
+  }
+}
