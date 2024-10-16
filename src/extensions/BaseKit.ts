@@ -156,7 +156,6 @@ export const BaseKit = Extension.create<BaseKitOptions>({
     if (this.options.document !== false) {
       extensions.push(Document.configure())
     }
-
     if (this.options.placeholder !== false) {
       extensions.push(
         Placeholder.configure({

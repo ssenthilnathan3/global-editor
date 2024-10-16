@@ -27,6 +27,7 @@ import RichTextEditor, {
   ImageGif,
   ImageUpload,
   ImportWord,
+  Import,
   Indent,
   Italic,
   Katex,
@@ -43,13 +44,17 @@ import RichTextEditor, {
   TaskList,
   TextAlign,
   TextDirection,
+  TrackChange,
   Underline,
   Video,
   VideoUpload,
   locale,
+  PaginationExtension,
+  PageNode,
 } from 'global-editor'
 
 import 'global-editor/style.css'
+import { Extension } from '@tiptap/core'
 
 function convertBase64ToBlob(base64: string) {
   const arr = base64.split(',')
@@ -72,6 +77,7 @@ const extensions = [
       limit: 50_000,
     },
   }),
+  TrackChange,
   History,
   SearchAndReplace,
   TableOfContents,
@@ -136,14 +142,22 @@ const extensions = [
   Iframe,
   ExportPdf.configure({ spacer: true }),
   ImportWord.configure({
-    upload: (files: File[]) => {
+    upload: async (files: File[]) => {
+      console.log("Upload function called with files:", files.length);
       const f = files.map(file => ({
         src: URL.createObjectURL(file),
         alt: file.name,
-      }))
-      return Promise.resolve(f)
+      }));
+      console.log("Processed files:", f);
+      return f;
     },
   }),
+  Import.configure({
+    appId: 'ok082489',
+    token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjkxMTQyOTMsIm5iZiI6MTcyOTExNDI5MywiZXhwIjoxNzI5MjAwNjkzLCJpc3MiOiJodHRwczovL2Nsb3VkLnRpcHRhcC5kZXYiLCJhdWQiOiI2ODc3YzA3NS05MjlkLTRiMDMtYTVjYS05ZTVlM2NmOTZkOGYifQ.0KIkH9VkSEbXEn9G0vWVBiCtFqDYD1Z5UnMq_E-RzFQ'
+  }),
+  PaginationExtension,
+  PageNode,
   ExportWord,
   Excalidraw,
   TextDirection,
@@ -198,7 +212,6 @@ function App() {
         style={{
           display: 'flex',
           gap: '12px',
-          marginTop: '100px',
           marginBottom: 10,
         }}
       >

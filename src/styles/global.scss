@@ -85,3 +85,24 @@ html body[data-scroll-locked] {
     color: var(--red) !important;
   }
 }
+
+.insertion {
+  color: green;
+}
+
+.deletion {
+  color: red;
+  text-decoration: line-through;
+}
+
+.page {
+  height: 297mm; /* A4 page height */
+  width: 210mm; /* A4 page width */
+  padding: 25.4mm; /* 1 inch padding */
+  border: 1px solid #ccc;
+  background: white;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto 20px; /* Center the page with space between pages */
+  box-sizing: border-box;
+}

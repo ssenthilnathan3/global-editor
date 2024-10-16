@@ -56,8 +56,8 @@ export const SlashCommand = Extension.create({
 
           return (
             ((isRootDepth && isParagraph && isStartOfNode)
-            || (isInColumn && isParagraph && isStartOfNode))
-            && isValidAfterContent
+              || (isInColumn && isParagraph && isStartOfNode))
+              && isValidAfterContent
           )
         },
         command: ({ editor, range, props }: { editor: Editor, range: Range, props: any }) => {

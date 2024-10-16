@@ -26,6 +26,7 @@ export const ImportWord = Extension.create<ImportWordOptions>({
           component: ImportWordButton,
           componentProps: {
             convert,
+            editor,
             action: () => editor.commands.setHorizontalRule(),
             disabled: !editor.can().setHorizontalRule(),
             icon: 'Word',

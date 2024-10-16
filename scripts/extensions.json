@@ -14,13 +14,6 @@
     ]
   },
   {
-    "name": "BulletList.ts",
-    "package": "BulletList",
-    "alias": [
-      "BulletList"
-    ]
-  },
-  {
     "name": "Blockquote.ts",
     "package": "Blockquote",
     "alias": [
@@ -32,6 +25,13 @@
     "package": "Bold",
     "alias": [
       "Bold"
+    ]
+  },
+  {
+    "name": "BulletList.ts",
+    "package": "BulletList",
+    "alias": [
+      "BulletList"
     ]
   },
   {
@@ -98,13 +98,6 @@
     ]
   },
   {
-    "name": "ExportPdf.ts",
-    "package": "ExportPdf",
-    "alias": [
-      "ExportPdf"
-    ]
-  },
-  {
     "name": "ExportWord.ts",
     "package": "ExportWord",
     "alias": [
@@ -112,10 +105,17 @@
     ]
   },
   {
-    "name": "FontSize.ts",
-    "package": "FontSize",
+    "name": "ExportPdf.ts",
+    "package": "ExportPdf",
     "alias": [
-      "FontSize"
+      "ExportPdf"
+    ]
+  },
+  {
+    "name": "FontFamily.ts",
+    "package": "FontFamily",
+    "alias": [
+      "FontFamily"
     ]
   },
   {
@@ -126,17 +126,17 @@
     ]
   },
   {
+    "name": "FontSize.ts",
+    "package": "FontSize",
+    "alias": [
+      "FontSize"
+    ]
+  },
+  {
     "name": "Heading.ts",
     "package": "Heading",
     "alias": [
       "Heading"
-    ]
-  },
-  {
-    "name": "Highlight.ts",
-    "package": "Highlight",
-    "alias": [
-      "Highlight"
     ]
   },
   {
@@ -154,10 +154,10 @@
     ]
   },
   {
-    "name": "FontFamily.ts",
-    "package": "FontFamily",
+    "name": "Highlight.ts",
+    "package": "Highlight",
     "alias": [
-      "FontFamily"
+      "Highlight"
     ]
   },
   {
@@ -182,24 +182,17 @@
     ]
   },
   {
-    "name": "ImageGif.ts",
-    "package": "ImageGif",
-    "alias": [
-      "ImageGif"
-    ]
-  },
-  {
-    "name": "ImageUpload.ts",
-    "package": "ImageUpload",
-    "alias": [
-      "ImageUpload"
-    ]
-  },
-  {
     "name": "ImportWord.ts",
     "package": "ImportWord",
     "alias": [
       "ImportWord"
+    ]
+  },
+  {
+    "name": "ImageGif.ts",
+    "package": "ImageGif",
+    "alias": [
+      "ImageGif"
     ]
   },
   {
@@ -210,10 +203,10 @@
     ]
   },
   {
-    "name": "Katex.ts",
-    "package": "Katex",
+    "name": "ImageUpload.ts",
+    "package": "ImageUpload",
     "alias": [
-      "Katex"
+      "ImageUpload"
     ]
   },
   {
@@ -224,10 +217,10 @@
     ]
   },
   {
-    "name": "Link.ts",
-    "package": "Link",
+    "name": "Katex.ts",
+    "package": "Katex",
     "alias": [
-      "Link"
+      "Katex"
     ]
   },
   {
@@ -238,10 +231,24 @@
     ]
   },
   {
+    "name": "Link.ts",
+    "package": "Link",
+    "alias": [
+      "Link"
+    ]
+  },
+  {
     "name": "ListItem.ts",
     "package": "ListItem",
     "alias": [
       "ListItem"
+    ]
+  },
+  {
+    "name": "Mention.ts",
+    "package": "Mention",
+    "alias": [
+      "Mention"
     ]
   },
   {
@@ -259,10 +266,17 @@
     ]
   },
   {
-    "name": "Mention.ts",
-    "package": "Mention",
+    "name": "MultiColumn.ts",
+    "package": "MultiColumn",
     "alias": [
-      "Mention"
+      "Column"
+    ]
+  },
+  {
+    "name": "MultiColumn.ts",
+    "package": "MultiColumn",
+    "alias": [
+      "MultiColumn"
     ]
   },
   {
@@ -270,13 +284,6 @@
     "package": "SearchAndReplace",
     "alias": [
       "SearchAndReplace"
-    ]
-  },
-  {
-    "name": "Selection.ts",
-    "package": "Selection",
-    "alias": [
-      "Selection"
     ]
   },
   {
@@ -301,10 +308,10 @@
     ]
   },
   {
-    "name": "Subscript.ts",
-    "package": "Subscript",
+    "name": "Selection.ts",
+    "package": "Selection",
     "alias": [
-      "Subscript"
+      "Selection"
     ]
   },
   {
@@ -315,17 +322,10 @@
     ]
   },
   {
-    "name": "MultiColumn.ts",
-    "package": "MultiColumn",
+    "name": "Subscript.ts",
+    "package": "Subscript",
     "alias": [
-      "Column"
-    ]
-  },
-  {
-    "name": "MultiColumn.ts",
-    "package": "MultiColumn",
-    "alias": [
-      "MultiColumn"
+      "Subscript"
     ]
   },
   {
@@ -371,10 +371,10 @@
     ]
   },
   {
-    "name": "TrailingNode.ts",
-    "package": "TrailingNode",
+    "name": "TextDirection.ts",
+    "package": "TextDirection",
     "alias": [
-      "TrailingNode"
+      "TextDirection"
     ]
   },
   {
@@ -385,17 +385,17 @@
     ]
   },
   {
+    "name": "TrailingNode.ts",
+    "package": "TrailingNode",
+    "alias": [
+      "TrailingNode"
+    ]
+  },
+  {
     "name": "Video.ts",
     "package": "Video",
     "alias": [
       "Video"
-    ]
-  },
-  {
-    "name": "TextDirection.ts",
-    "package": "TextDirection",
-    "alias": [
-      "TextDirection"
     ]
   },
   {

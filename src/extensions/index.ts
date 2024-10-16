@@ -106,6 +106,8 @@ export { ExportPdf } from './ExportPdf'
 
 export { ImportWord } from './ImportWord'
 
+export { Import } from '@tiptap-pro/extension-import'
+
 export { ExportWord } from './ExportWord'
 
 export { TableOfContents } from './TableOfContent'
@@ -119,3 +121,7 @@ export { Mention } from './Mention'
 export { Attachment } from './Attachment'
 
 export { ImageGif } from './ImageGif'
+
+export { TrackChange } from './track'
+
+export { PaginationExtension, PageNode } from './Pagination'
