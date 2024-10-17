@@ -9,7 +9,7 @@ export interface TrackChangeOptions {
 export const InsertionMark = Mark.create({
   name: 'insertion',
 
-  renderHTML({ HTMLAttributes }) {
+  renderHTML() {
     return ['span', { class: 'insertion', style: 'color: green;' }, 0]
   },
 
@@ -25,7 +25,7 @@ export const InsertionMark = Mark.create({
 export const DeletionMark = Mark.create({
   name: 'deletion',
 
-  renderHTML({ HTMLAttributes }) {
+  renderHTML() {
     return [
       'span',
       {
@@ -96,7 +96,6 @@ export const TrackChange = Extension.create<TrackChangeOptions>({
   },
 
   addExtensions() {
-    console.log('Adding marks:', InsertionMark, DeletionMark)
     return [InsertionMark, DeletionMark]
   },
 })

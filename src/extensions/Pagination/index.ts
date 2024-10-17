@@ -47,7 +47,7 @@ export const PageNode = Node.create({
   },
 
   addNodeView() {
-    return ({ node, HTMLAttributes, getPos }) => {
+    return ({ node }) => {
       const dom = document.createElement('div')
       dom.setAttribute('data-page', 'true')
       dom.classList.add('page')
@@ -75,68 +75,6 @@ export const PageNode = Node.create({
   },
 })
 
-export const PaginationExtension = Extension.create({
-  name: 'pagination',
-  addCommands() {
-    return {
-      updatePageNumbers: () => ({ state, dispatch }) => {
-        if (dispatch) {
-          let pageNumber = 1
-          const tr = state.tr
-          state.doc.descendants((node, pos) => {
-            if (node.type.name === 'page') {
-              tr.setNodeMarkup(pos, null, { ...node.attrs, pageNumber })
-              pageNumber++
-            }
-          })
-          dispatch(tr)
-        }
-        return true
-      },
-    }
-  },
-  addProseMirrorPlugins() {
-    return [
-      keymap({
-        Enter: (state, dispatch) => {
-          const { from, to } = state.selection
-
-          // Proceed only if dispatch is provided and we're working with a valid range
-          if (dispatch && from === to) {
-            const tr = state.tr
-
-            // Get the resolved position in the document
-            const $pos = state.doc.resolve(from)
-
-            // Ensure that the position is within a valid block (paragraph)
-            if ($pos.parent.type.name === 'paragraph') {
-              // Create a new empty paragraph node
-              const paragraph = state.schema.nodes.paragraph.create()
-
-              // Insert the empty paragraph at the cursor's current position
-              tr.insert(from, paragraph)
-
-              // Find the nearest valid cursor position inside the new paragraph
-              const newSelection = Selection.near(tr.doc.resolve(from + 1), 1)
-
-              // Set the selection to be inside the new paragraph
-              tr.setSelection(newSelection)
-
-              // Dispatch the transaction properly
-              dispatch(tr)
-
-              return true
-            }
-          }
-
-          return false
-        },
-      }),
-      PaginationPlugin,
-    ]
-  },
-})
-
 export const PaginationPlugin = new Plugin({
   key: new PluginKey('pagination'),
   view() {
@@ -157,7 +95,6 @@ export const PaginationPlugin = new Plugin({
         }
 
         const docChanged = !view.state.doc.eq(prevState.doc)
-        console.log('view.state.doc: ', view.state.doc)
         const initialLoad = prevState.doc.content.size === 0 && state.doc.content.size > 0
 
         let hasPageNodes = false
@@ -235,7 +172,7 @@ export const PaginationPlugin = new Plugin({
 
           // Record the mapping from old position to new position
           const nodeStartPosInNewDoc
-            = cumulativeNewDocPos + currentPageContent.reduce((sum, n) => sum + n.nodeSize, 0)
+              = cumulativeNewDocPos + currentPageContent.reduce((sum, n) => sum + n.nodeSize, 0)
           oldToNewPosMap[oldPos] = nodeStartPosInNewDoc
 
           currentPageContent.push(node)
@@ -310,5 +247,67 @@ export const PaginationPlugin = new Plugin({
         isPaginating = false
       },
     }
+  },
+})
+
+export const PaginationExtension = Extension.create({
+  name: 'pagination',
+  addCommands() {
+    return {
+      updatePageNumbers: () => ({ state, dispatch }) => {
+        if (dispatch) {
+          let pageNumber = 1
+          const tr = state.tr
+          state.doc.descendants((node, pos) => {
+            if (node.type.name === 'page') {
+              tr.setNodeMarkup(pos, null, { ...node.attrs, pageNumber })
+              pageNumber++
+            }
+          })
+          dispatch(tr)
+        }
+        return true
+      },
+    }
+  },
+  addProseMirrorPlugins() {
+    return [
+      keymap({
+        Enter: (state, dispatch) => {
+          const { from, to } = state.selection
+
+          // Proceed only if dispatch is provided and we're working with a valid range
+          if (dispatch && from === to) {
+            const tr = state.tr
+
+            // Get the resolved position in the document
+            const $pos = state.doc.resolve(from)
+
+            // Ensure that the position is within a valid block (paragraph)
+            if ($pos.parent.type.name === 'paragraph') {
+              // Create a new empty paragraph node
+              const paragraph = state.schema.nodes.paragraph.create()
+
+              // Insert the empty paragraph at the cursor's current position
+              tr.insert(from, paragraph)
+
+              // Find the nearest valid cursor position inside the new paragraph
+              const newSelection = Selection.near(tr.doc.resolve(from + 1), 1)
+
+              // Set the selection to be inside the new paragraph
+              tr.setSelection(newSelection)
+
+              // Dispatch the transaction properly
+              dispatch(tr)
+
+              return true
+            }
+          }
+
+          return false
+        },
+      }),
+      PaginationPlugin,
+    ]
   },
 })
