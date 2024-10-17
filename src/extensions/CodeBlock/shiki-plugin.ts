@@ -93,7 +93,7 @@ export function ShikiPlugin({
           this.checkUndecoratedBlocks()
         }
 
-        destroy() {}
+        destroy() { }
 
         // Initialize shiki async, and then highlight initial document
         async initDecorations() {
@@ -160,24 +160,22 @@ export function ShikiPlugin({
           = transaction.docChanged
           // Apply decorations if:
           // selection includes named node,
-          && ([oldNodeName, newNodeName].includes(name)
           // OR transaction adds/removes named node,
-            || newNodes.length !== oldNodes.length
           // OR transaction has changes that completely encapsulte a node
           // (for example, a transaction that affects the entire document).
           // Such transactions can happen during collab syncing via y-prosemirror, for example.
-            || transaction.steps.some((step: any) => {
-              return (
-                step.from !== undefined
-                && step.to !== undefined
-                && oldNodes.some((node) => {
-                  return (
-                    node.pos >= step.from
-                    && node.pos + node.node.nodeSize <= step.to
-                  )
-                })
-              )
-            }))
+          && ([oldNodeName, newNodeName].includes(name) || newNodes.length !== oldNodes.length || transaction.steps.some((step: any) => {
+            return (
+              step.from !== undefined
+              && step.to !== undefined
+              && oldNodes.some((node) => {
+                return (
+                  node.pos >= step.from
+                  && node.pos + node.node.nodeSize <= step.to
+                )
+              })
+            )
+          }))
 
         // only create code decoration when it's necessary to do so
         if (
