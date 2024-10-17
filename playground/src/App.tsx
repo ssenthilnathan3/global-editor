@@ -51,9 +51,9 @@ import RichTextEditor, {
   locale,
   PaginationExtension,
   PageNode,
-} from 'global-editor'
+} from '@ailaysa/global-editor'
 
-import 'global-editor/style.css'
+import '@ailaysa/global-editor/style.css'
 import { Extension } from '@tiptap/core'
 
 function convertBase64ToBlob(base64: string) {
