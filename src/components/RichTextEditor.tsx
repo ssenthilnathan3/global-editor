@@ -16,6 +16,7 @@ import { removeCSS, updateCSS } from '@/utils/dynamicCSS'
 
 import '../styles/index.scss'
 import CharactorCount from '@/components/CharactorCount'
+import { PageLayoutExtension } from '@/extensions/Pagination'
 
 /**
  * Interface for RichTextEditor component props
@@ -90,7 +91,13 @@ function RichTextEditor(props: RichTextEditorProps, ref: React.ForwardedRef<{ ed
   }, EDITOR_UPDATE_WATCH_THROTTLE_WAIT_TIME)
 
   const editor = useEditor({
-    extensions: sortExtensions,
+    extensions: [
+      ...sortExtensions,
+      PageLayoutExtension.configure({
+        headerContent: '<h1>Document Header</h1>',
+        footerContent: '<p>Page {page}</p>',
+      }),
+    ],
     content,
     onUpdate: ({ editor }) => {
       if (onValueChange)

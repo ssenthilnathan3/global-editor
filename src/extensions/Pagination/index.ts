@@ -2,7 +2,7 @@ import { Extension, Node, mergeAttributes } from '@tiptap/core'
 import { keymap } from '@tiptap/pm/keymap'
 import type { Node as PMNode } from '@tiptap/pm/model'
 import { Plugin, PluginKey, Selection, TextSelection } from '@tiptap/pm/state'
-import type { EditorView } from '@tiptap/pm/view'
+import { Decoration, DecorationSet, type EditorView } from '@tiptap/pm/view'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -11,17 +11,26 @@ declare module '@tiptap/core' {
          * Update page numbers
          */
       updatePageNumbers: () => ReturnType
+
+      setPageBreak: () => ReturnType
     }
   }
+}
+
+export interface PageLayoutOptions {
+  pageWidth: string
+  pageHeight: string
+  headerHeight: string
+  footerHeight: string
+  headerContent: string
+  footerContent: string
 }
 
 export const PageNode = Node.create({
   name: 'page',
   group: 'block',
-  content: 'block*',
-  defining: true,
-  isolating: false,
-
+  content: 'block+',
+  
   addAttributes() {
     return {
       pageNumber: {
@@ -40,37 +49,96 @@ export const PageNode = Node.create({
 
   renderHTML({ HTMLAttributes, node }) {
     return ['div', mergeAttributes(HTMLAttributes, {
-      'data-page': true,
+      'data-page': 'true',
       'class': 'page',
       'data-page-number': node.attrs.pageNumber,
     }), 0]
   },
+})
 
-  addNodeView() {
-    return ({ node }) => {
-      const dom = document.createElement('div')
-      dom.setAttribute('data-page', 'true')
-      dom.classList.add('page')
-      dom.style.height = '297mm' // A4 height in mm
-      dom.style.width = '210mm' // A4 width in mm
-      dom.style.padding = '25.4mm' // 1 inch padding
-      dom.style.border = '1px solid #ccc'
-      dom.style.background = 'white'
-      dom.style.overflow = 'hidden'
-      dom.style.position = 'relative'
+export const PageLayoutExtension = Extension.create<PageLayoutOptions>({
+  name: 'pageLayout',
 
-      const contentDOM = document.createElement('div')
-      dom.appendChild(contentDOM)
+  addOptions() {
+    return {
+      pageWidth: '210mm',
+      pageHeight: '297mm',
+      headerHeight: '20mm',
+      footerHeight: '20mm',
+      headerContent: '<h1>Header</h1>',
+      footerContent: '<p>Footer - Page {page}</p>',
+    }
+  },
 
-      const pageNumber = document.createElement('div')
-      pageNumber.classList.add('page-number')
-      pageNumber.textContent = `Page ${node.attrs.pageNumber}`
-      dom.appendChild(pageNumber)
+  addExtensions() {
+    return [PageNode]
+  },
 
-      return {
-        dom,
-        contentDOM,
-      }
+  addGlobalAttributes() {
+    return [
+      {
+        types: ['paragraph', 'heading'],
+        attributes: {
+          pageBreak: {
+            default: null,
+            parseHTML: element => element.getAttribute('data-page-break'),
+            renderHTML: attributes => {
+              if (!attributes.pageBreak) {
+                return {}
+              }
+              return { 'data-page-break': attributes.pageBreak }
+            },
+          },
+        },
+      },
+    ]
+  },
+
+  addProseMirrorPlugins() {
+    const { headerContent, footerContent, headerHeight, footerHeight, pageWidth, pageHeight } = this.options
+
+    return [
+      new Plugin({
+        key: new PluginKey('pageLayout'),
+        props: {
+          decorations: (state) => {
+            const { doc } = state
+            const decorations: Decoration[] = []
+            let pageNumber = 1
+
+            doc.descendants((node, pos) => {
+              if (node.type.name === 'page') {
+                const header = Decoration.widget(pos + 1, () => {
+                  const headerEl = document.createElement('div')
+                  headerEl.className = 'page-header'
+                  headerEl.innerHTML = headerContent.replace('{page}', pageNumber.toString())
+                  return headerEl
+                })
+
+                const footer = Decoration.widget(pos + node.nodeSize - 1, () => {
+                  const footerEl = document.createElement('div')
+                  footerEl.className = 'page-footer'
+                  footerEl.innerHTML = footerContent.replace('{page}', pageNumber.toString())
+                  return footerEl
+                })
+
+                decorations.push(header, footer)
+                pageNumber++
+              }
+            })
+
+            return DecorationSet.create(doc, decorations)
+          },
+        },
+      }),
+    ]
+  },
+
+  addCommands() {
+    return {
+      setPageBreak: () => ({ commands }) => {
+        return commands.setMark('pageBreak', { pageBreak: 'true' })
+      },
     }
   },
 })

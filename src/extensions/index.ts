@@ -124,4 +124,4 @@ export { ImageGif } from './ImageGif'
 
 export { TrackChange } from './track'
 
-export { PaginationExtension, PageNode } from './Pagination'
+export { PaginationExtension, PageNode, PageLayoutExtension } from './Pagination'

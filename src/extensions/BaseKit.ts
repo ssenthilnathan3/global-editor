@@ -28,6 +28,9 @@ import type { TrailingNodeOptions } from '@/extensions/TrailingNode'
 import { TrailingNode } from '@/extensions/TrailingNode'
 import { localeActions } from '@/locales'
 
+import { PaginationExtension } from '@/extensions/Pagination'
+import { PageNode } from '@/extensions/Pagination'
+
 /**
  * Represents the interface for options in the base toolkit.
  */
@@ -152,6 +155,9 @@ export const BaseKit = Extension.create<BaseKitOptions>({
 
   addExtensions() {
     const extensions: AnyExtension[] = []
+
+    extensions.push(PaginationExtension)
+    extensions.push(PageNode)
 
     if (this.options.document !== false) {
       extensions.push(Document.configure())

@@ -73,7 +73,6 @@ import {
   TextAlignLeftIcon,
   TextAlignRightIcon,
 } from '@radix-ui/react-icons'
-import ImportWord from './ImportWord'
 import {
   AspectRatio,
   BlockquoteLeft,
@@ -95,6 +94,7 @@ import { Direction } from '@/components/icons/Direction'
 import { LeftToRight } from '@/components/icons/LeftToRight'
 import { RightToLeft } from '@/components/icons/RightToLeft'
 import { GifIcon } from '@/components/icons/GIfIcon'
+import ImportWord from './ImportWord'
 
 export const icons = {
   Bold,
@@ -195,4 +195,5 @@ export const icons = {
   Attachment: Paperclip,
   GifIcon,
   ChevronUp,
+  
 } as any

@@ -44,17 +44,15 @@ import RichTextEditor, {
   TaskList,
   TextAlign,
   TextDirection,
-  TrackChange,
+  // TrackChange,
   Underline,
   Video,
   VideoUpload,
   locale,
-  PaginationExtension,
-  PageNode,
+  PageLayoutExtension
 } from '@ailaysa/global-editor'
 
 import '@ailaysa/global-editor/style.css'
-import { Extension } from '@tiptap/core'
 
 function convertBase64ToBlob(base64: string) {
   const arr = base64.split(',')
@@ -77,7 +75,7 @@ const extensions = [
       limit: 50_000,
     },
   }),
-  TrackChange,
+  // TrackChange,
   History,
   SearchAndReplace,
   TableOfContents,
@@ -156,8 +154,7 @@ const extensions = [
     appId: 'ok082489',
     token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjkxMTQyOTMsIm5iZiI6MTcyOTExNDI5MywiZXhwIjoxNzI5MjAwNjkzLCJpc3MiOiJodHRwczovL2Nsb3VkLnRpcHRhcC5kZXYiLCJhdWQiOiI2ODc3YzA3NS05MjlkLTRiMDMtYTVjYS05ZTVlM2NmOTZkOGYifQ.0KIkH9VkSEbXEn9G0vWVBiCtFqDYD1Z5UnMq_E-RzFQ'
   }),
-  PaginationExtension,
-  PageNode,
+  
   ExportWord,
   Excalidraw,
   TextDirection,
@@ -229,7 +226,13 @@ function App() {
         output="html"
         content={content as any}
         onChangeContent={onValueChange}
-        extensions={extensions}
+        extensions={[
+          ...extensions,
+          PageLayoutExtension.configure({
+            headerContent: '<h1>Document Header</h1>',
+            footerContent: '<p>Page {page}</p>',
+          }),
+        ]}
         dark={theme === 'dark'}
         disabled={disable}
       />
